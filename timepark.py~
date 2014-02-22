@@ -1,0 +1,33 @@
+import datetime as dt
+filename = 'revenue-transaction-report-2012-a.csv'
+f = open ( filename,'r')
+lines = f.readlines()
+initial = True
+exittime = 0
+entrytime = 0
+numrecords = len(lines) - 1
+totaltimespentparked = dt.timedelta(weeks=0, days=0, hours=0, minutes=0)
+for i,line in enumerate(lines):
+    if initial:
+        initial = False
+    else:
+        myline = line.split(',')
+        entry = myline[0]
+        if entry:
+            entrytime = dt.datetime.strptime(entry, '%m/%d/%y %H:%M')
+            exittime = dt.datetime.strptime(myline[1], '%m/%d/%y %H:%M')
+            
+            totaltimespentparked = totaltimespentparked + (exittime - entrytime)
+#            print totaltimespentparked
+
+print "Seconds parked"
+print totaltimespentparked.seconds
+ave = (totaltimespentparked.days*86400 + totaltimespentparked.seconds/60) / numrecords
+print ave
+
+
+print "Records: " + str(numrecords)
+
+print "Minutes: " + str(totaltimespentparked.days)
+
+

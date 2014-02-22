@@ -1,0 +1,67 @@
+  1 import datetime as dt
+  2 filename = 'revenue-transaction-report-2012-a.csv'
+  3 f = open ( filename,'r')
+  4 lines = f.readlines()
+  5 initial = True
+  6 exittime = 0
+  7 entrytime = 0
+  8 numrecords = len(lines) - 1
+  9 totaltimespentparked = dt.timedelta(weeks=0, days=0, hours=0, minutes=0)
+ 10 for i,line in enumerate(lines):
+ 11     if initial:
+ 12         initial = False
+ 13     else:
+ 14         myline = line.split(',')
+ 15         entry = myline[0]
+ 16         if entry:
+ 17             entrytime = dt.datetime.strptime(entry, '%m/%d/%y %H:%M')
+ 18             exittime = dt.datetime.strptime(myline[1], '%m/%d/%y %H:%M')
+ 19
+ 20             totaltimespentparked = totaltimespentparked + (exittime - entrytime)
+ 21 #            print totaltimespentparked
+ 22
+ 23 print "Seconds parked"
+ 24 print totaltimespentparked.seconds + totaltimespentparked.days*86400
+ 25 print "Days:",totaltimespentparked.days
+ 26 ave = (totaltimespentparked.days*86400 + totaltimespentparked.seconds/60) / numrecords
+ 27 print ave
+ 28
+ 29
+ 30 print "Records: " + str(numrecords)
+ 31
+ 32 print "Minutes: " + str(totaltimespentparked.days)
+ 33
+ 34import datetime as dt
+filename = 'revenue-transaction-report-2012-a.csv'
+f = open ( filename,'r')
+lines = f.readlines()
+initial = True
+exittime = 0
+entrytime = 0
+numrecords = len(lines) - 1
+totaltimespentparked = dt.timedelta(weeks=0, days=0, hours=0, minutes=0)
+for i,line in enumerate(lines):
+    if initial:
+        initial = False
+    else:
+        myline = line.split(',')
+        entry = myline[0]
+        if entry:
+            entrytime = dt.datetime.strptime(entry, '%m/%d/%y %H:%M')
+            exittime = dt.datetime.strptime(myline[1], '%m/%d/%y %H:%M')
+            
+            totaltimespentparked = totaltimespentparked + (exittime - entrytime)
+#            print totaltimespentparked
+
+print "Seconds parked"
+print totaltimespentparked.seconds + totaltimespentparked.days*86400
+print "Days:",totaltimespentparked.days
+ave = (totaltimespentparked.days*86400 + totaltimespentparked.seconds/60) / numrecords
+print ave
+
+
+print "Records: " + str(numrecords)
+
+print "Minutes: " + str(totaltimespentparked.days)
+
+
