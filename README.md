@@ -7,9 +7,12 @@ currently it prints the following type of graph
 Dependencies:
 --------
 Python (tested with 2.7)
+
 matplotlib
+
 The data at http://data.grcity.us/dataset/parking-ramp-transactions saved as csv files
-The lots.csv file (currently not publicly available, need to talk to Traci about this)
+
+The lots.csv file (recently added to github)
 
 The script will take a while to process as it's going over a large amount of data.
 
