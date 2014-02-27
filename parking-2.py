@@ -4,7 +4,7 @@ import matplotlib.dates as md
 import matplotlib.axes as axes
 import numpy as np
 
-filename = 'revenue-transaction-report-2011-l.csv'
+filename = 'revenue-transaction-report-2012-b.csv'
 lot_info_filename = 'lots.csv'
 lf = open(lot_info_filename,'r')
 # create a dictionary where the lot number is the key and the value is [name, total spaces, ID, address, half hour, coin cash, max, even, xcoord, ycoord]
@@ -25,6 +25,9 @@ missing_lots = [10,12,14,3]
 legend = []
 xAxis = ['0']*minutes_in_a_day
 
+datetimeformat4 = '%m/%d/%Y %H:%M'
+datetimeformat2 = '%m/%d/%y %H:%M'
+
 byLot = {}
 lot = '0'
 i = 0
@@ -40,8 +43,12 @@ with open(filename,'r') as f:
             if lot in missing_lots:
                 print "Lot " + lots + " Has data."
             if entry:
-                exittime = dt.datetime.strptime(myline[1], '%m/%d/%Y %H:%M')
-                entrytime = dt.datetime.strptime(entry, '%m/%d/%Y %H:%M')
+                try:
+                    exittime = dt.datetime.strptime(myline[1], datetimeformat4)
+                    entrytime = dt.datetime.strptime(entry, datetimeformat4)
+                except:
+                    exittime = dt.datetime.strptime(myline[1], datetimeformat2)
+                    entrytime = dt.datetime.strptime(entry, datetimeformat2)                    
                 entryminutes = entrytime.hour*60 + entrytime.minute
                 exitminutes = exittime.hour*60 + exittime.minute
                 if (i%100000) == 0:
@@ -87,8 +94,12 @@ for key,value in byLot.iteritems():
     for i,v in enumerate(value):
         value[i] = v/256
     plt.plot(value)
-    print lots[key][0]
-    legend.append(unicode(lots[key][0]))
+    if key in lots.keys():
+        print lots[key][0]
+        legend.append(unicode(lots[key][0]))
+    else:
+        print key
+        legend.append(unicode(key))
 
 plt.legend(legend, loc=2, borderaxespad=0.)
 
