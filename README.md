@@ -1,3 +1,10 @@
+Issues
+--------
+There are some discrepencies with the data at this time so drawing conclusions other than general usage patterns is advised against.
+Some issues include:
+entry/exit times that are the same or just one minute apart
+missing entry times
+
 Features
 --------
 Currently it prints the following type of graph. The screenshot below treats all days as the same.
