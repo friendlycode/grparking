@@ -11,7 +11,7 @@ lf = open(lot_info_filename,'r')
 lots = {}
 for line in lf.readlines():
     myline = line.split(',')
-    lots[myline[1]] = [myline[0],myline[2],myline[3],myline[5],myline[6],myline[7],myline[8],myline[9],myline[10],myline[11]]
+    lots[myline[1]] = [myline[0],myline[2],myline[3],myline[5],myline[6],myline[7],myline[8],myline[9]]
 
 initial = True
 exittime = 0
@@ -41,7 +41,7 @@ with open(filename,'r') as f:
             lot = myline[4]
 
             if lot in missing_lots:
-                print "Lot " + lots + " Has data."
+                print ( "Lot " + lots + " Has data." )
             if entry:
                 try:
                     exittime = dt.datetime.strptime(myline[1], datetimeformat4)
@@ -52,7 +52,7 @@ with open(filename,'r') as f:
                 entryminutes = entrytime.hour*60 + entrytime.minute
                 exitminutes = exittime.hour*60 + exittime.minute
                 if (i%100000) == 0:
-                    print "On line: " + str(i)
+                    print ( "On line: " + str(i) )
 
                 if entryminutes > exitminutes:
                     # entered before midnight, left after midnight
@@ -76,7 +76,7 @@ with open(filename,'r') as f:
                             byLot[entrytime.strftime('%A')][lot] = [0]*minutes_in_a_day
                         byLot[entrytime.strftime('%A')][lot][x] += 1
             elif lot in missing_lots:
-                print "Lot " + str(lot) + "has no entry time"
+                print ( "Lot " + str(lot) + "has no entry time" )
 
 suffix = ' AM'
 for i in range(25):
@@ -95,30 +95,30 @@ plt.xlabel('Time (hrs)')
 plt.ylabel('Number of Cars Parked')
 
 for day in byLot.keys():
-    print byLot.keys()
-    print byLot[day].iteritems()
+    print ( byLot.keys() )
+    print ( byLot[day].iteritems() )
     for key,value in byLot[day].iteritems():
         for i,v in enumerate(value):
             value[i] = v/52
         plt.plot(value)
         if key in lots.keys():
-            print lots[key][0]
+            print ( lots[key][0] )
             legend.append(unicode(lots[key][0]))
         else:
-            print key
+            print ( key )
             legend.append(unicode(key))
     plt.title("Cars Parked on a " + day)
     plt.legend(legend, loc=2, borderaxespad=0.)
     plt.xticks(xticks, xAxis)
     
-    print "Number of lots: " + str(len(lots.keys()))
-    print "Number with 2011 data: " + str(len(legend))
+    print ( "Number of lots: " + str(len(lots.keys())) )
+    print ( "Number with 2011 data: " + str(len(legend)) )
     
-    print "Lots not graphed: "
+    print ( "Lots not graphed: " )
     for lot in lots.keys():
         if lots[lot][0] not in legend:
-            print "Lot ID: " + str(lot)
-            print "Lot Name: " + lots[lot][0]
+            print ( "Lot ID: " + str(lot) )
+            print ( "Lot Name: " + lots[lot][0] )
     
     plt.show()
 
