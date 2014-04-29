@@ -37,12 +37,14 @@ elif split_into_files is True:
     for key in card_id_dictionary.keys():
         if key+".txt" in files:
             o = open(o_name+key+".txt",'a+')
-            o.write(card_id_dictionary[key])
+            for line in card_id_dictionary[key]:
+                o.write(line)
             o.close()
 #            print ("appended data for " + myid)
         else:
             o = open(o_name+myid+".txt",'w')
-            o.write(card_id_dictionary[key])
+            for line in card_id_dictionary[key]:
+                o.write(line)
             o.close()
 else:
     lot_num_index = 5
