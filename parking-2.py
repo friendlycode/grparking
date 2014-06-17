@@ -56,62 +56,23 @@ with open(filename,'r') as f:
 
                 if entryminutes > exitminutes:
                     # entered before midnight, left after midnight
-                    for x in range(entryminutes,minutes_in_a_day):
+                    for x in range(entryminutes, minutes_in_a_day):
                         if lot not in byLot.keys():
-                            byLot[lot] = [0]*minutes_in_a_day
+                            byLot[lot] = [0] * minutes_in_a_day
                         byLot[lot][x] += 1
-                    for x in range(0,exitminutes):
+                    for x in range(0, exitminutes):
                         if lot not in byLot.keys():
-                            byLot[lot] = [0]*minutes_in_a_day
+                            byLot[lot] = [0] * minutes_in_a_day
                         byLot[lot][x] += 1
 
                 else:
-                    for x in range(entryminutes,exitminutes):
+                    for x in range(entryminutes, exitminutes):
                         if lot not in byLot.keys():
-                            byLot[lot] = [0]*minutes_in_a_day
+                            byLot[lot] = [0] * minutes_in_a_day
                         byLot[lot][x] += 1
-            elif lot in missing_lots:
-                print "Lot " + str(lot) + "has no entry time"
 
-suffix = ' AM'
-for i in range(25):
-    if i >= 12:
-        suffix = ' PM'
-    xAxis[i] = str(i%12) + str(suffix)
-xAxis[0] = "Midnight"
-xAxis[12] = "Noon"
+byLot = {'all_days': byLot}
 
-xticks = np.arange(0,minutes_in_a_day,60)
-plt.xticks(xticks, xAxis)
-today = dt.datetime.now()
-times = [today + dt.timedelta(minutes=i) for i in range(minutes_in_a_day)]
-
-plt.xlabel('Time (hrs)')
-plt.ylabel('Number of Cars Parked')
-plt.title('Cars Parked During a Typical Day in 2011')
-
-for key,value in byLot.iteritems():
-    for i,v in enumerate(value):
-        value[i] = v/256
-    plt.plot(value)
-    if key in lots.keys():
-        print lots[key][0]
-        legend.append(unicode(lots[key][0]))
-    else:
-        print key
-        legend.append(unicode(key))
-
-plt.legend(legend, loc=2, borderaxespad=0.)
-
-print "Number of lots: " + str(len(lots.keys()))
-print "Number with 2011 data: " + str(len(legend))
-
-print "Lots not graphed: "
-for lot in lots.keys():
-    if lots[lot][0] not in legend:
-        print "Lot ID: " + str(lot)
-        print "Lot Name: " + lots[lot][0]
-
-plt.show()
+graph(byLot, lots)
 
 

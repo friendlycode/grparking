@@ -25,3 +25,9 @@ The lots.csv file (recently added to github)
 
 The script will take a while to process as it's going over a large amount of data.
 
+
+TODO:
+-----
+
+re-write all the card data conversions to be more useable.
+re-write display so that instead of ignoring data, it graphs a different line for that lot.
